@@ -1,0 +1,24 @@
+create database bus_ticket_reservation;
+use bus_ticket_reservation;
+create table Bus(Busno varchar(20) primary key, Arrival varchar(50), Destination varchar(50));
+insert into Bus values("TS01", "Hyderabad", "Warangal"),("TS02","Warangal","Narsampet"),("TS03","Narsampet","Nachinapally");
+update Bus set Destination = "Thorrur" where Busno = "TS03";
+select * from Bus;
+create table Ticket(T_id int primary key,Journeydate date,time varchar(50));
+insert into Ticket values("001","2021-05-12","3:00"),("002","2021-05-12","4:45"),("003","2021-05-13","5:00");
+update Ticket set Journeydate = "2021-05-13" where T_id = 002;
+select * from Ticket;
+create table Passenger(P_no int primary key,Name varchar(50),Gender varchar(10),Age int,Seat_no int);
+insert into Passenger values(1,"Raksha","F",22,4),(2,"Rahul","M",25,8),(3,"Neelima","O",30,9),(4,"sravan","M",21,12);
+delete from Passenger where P_no = 4;
+ALTER table Passenger ADD contact varchar(10);
+ALTER table Passenger DROP contact;
+select * from Passenger;
+create table Reservation(P_no int primary key,foreign key(P_no) references Passenger(P_no),Journeydate date ,
+foreign key(Journeydate) references Ticket(Journeydate),No_of_Seats int,Address varchar(50),contact int,status char(20));
+insert into Reservation values(1,"2021-05-12",1,"Manikonda",834151,"R"),
+(2,"2021-05-13",3,"Hanamkonda",934752,"R"),(3,"2021-05-13",5,"Laknepally",843688,"C");
+update Reservation set Journeydate = "2021-05-12" where P_no = 2;
+ALTER table Reservation CHANGE Address P_Address varchar(25);
+ALTER table Reservation MODIFY P_Address varchar(50);
+select * from Reservation;
