@@ -1,0 +1,35 @@
+create database Students;
+use Students;
+
+create table students(stud_id int primary key,stud_name varchar(15),age int default 18,cgpa double);
+insert into students values(1,'Jonas',18,7.5);
+insert into students values(2,'Martha',19,9.0);
+insert into students values(3,'Noah',18,8.6);
+insert into students values(4,'Magnus',18,9.8);
+insert into students values(5,'Erik',19,8.8);
+select * from students;
+
+create table employee(stud_id int,empid int,emp_name varchar(25),age int default 23,foreign key(stud_id) references students(stud_id));
+insert into employee values(1,123,'Peter',20);
+insert into employee values(2,456,'Clara',18);
+insert into employee values(3,678,'Jana',null);
+insert into employee values(4,926,'Adam',19);
+select * from employee;
+ 
+SELECT stud_id from students WHERE stud_id <> ALL(select stud_id from employee);
+
+SELECT stud_id from students WHERE stud_id IN (Select stud_id from employee where stud_id >= 3);
+
+SELECT stud_id from students WHERE stud_id = Some(Select stud_id from employee where stud_id >= 1);
+
+SELECT stud_id from students WHERE stud_id  = ANY(Select stud_id from employee where stud_id >= 2);
+
+SELECT stud_name as student_Name from students WHERE stud_id in (2,5);
+
+SELECT stud_id from students WHERE stud_id not in (Select stud_id from employee);
+
+SELECT * from students WHERE stud_id between 1 and 4;
+
+SELECT stud_id from students WHERE stud_id < 3 or stud_id in (select stud_id from employee where emp_name = 'Clara');
+
+SELECT stud_id from students WHERE stud_id > 3 and stud_id in (select stud_id from employee where emp_name = 'Adam');
